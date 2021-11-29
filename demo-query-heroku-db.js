@@ -11,6 +11,12 @@ require("dotenv").config();
 if (!process.env.DATABASE_URL) {
   throw "No DATABASE_URL env var!  Have you made a .env file?  And set up dotenv?";
 }
+const herokuSSLSetting = { rejectUnauthorized: false };
+const sslSetting = process.env.LOCAL ? false : herokuSSLSetting;
+const dbConfig = {
+  connectionString: process.env.DATABASE_URL,
+  ssl: sslSetting,
+};
 
 async function doDemo() {
   // To connect to a heroku db you need to specify an object value for the ssl option
